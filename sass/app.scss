@@ -1,0 +1,39 @@
+body {
+	padding: 50px;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+	color: #00B7FF;
+}
+
+table{
+	width: 100%;
+	max-width: 800px;
+	min-width: 500px;
+	padding: 0 10px;
+	max-height: 1000px;
+}
+tbody{
+	> tr {
+		&:nth-child(odd){
+			background-color: hsl(236, 96%, 90%);
+		}
+		&:nth-child(even){
+			background-color: hsl(132, 96%, 93%);
+		}
+	}
+}
+th{
+	background-color: hsl(132, 96%, 93%);
+}
+tr{
+	height: 25px;
+}
+td, th{
+	width: 25%;
+	text-align: center;
+	> button{
+		width: 100%;
+	}
+}

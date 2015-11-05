@@ -1,0 +1,32 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+a {
+  color: #00B7FF; }
+
+table {
+  width: 100%;
+  max-width: 800px;
+  min-width: 500px;
+  padding: 0 10px;
+  max-height: 1000px; }
+
+tbody > tr:nth-child(odd) {
+  background-color: #cdd0fe; }
+tbody > tr:nth-child(even) {
+  background-color: #dcfee3; }
+
+th {
+  background-color: #dcfee3; }
+
+tr {
+  height: 25px; }
+
+td, th {
+  width: 25%;
+  text-align: center; }
+  td > button, th > button {
+    width: 100%; }
+
+/*# sourceMappingURL=app.css.map */
