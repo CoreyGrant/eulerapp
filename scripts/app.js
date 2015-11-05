@@ -3,8 +3,42 @@ import React from 'react';
 import Questions from './questions.js';
 import _ from 'lodash'
 import data from './data.js'
-
-var EulerTable = React.createClass({
+var EulerHeader = React.createClass({
+	render(){
+		return (
+			<thead>
+				<tr>
+					{this.props.headers.map(x => <th key={x}>{x}</th>)}
+				</tr>
+			</thead>
+		)
+	}
+})
+var EulerBody = React.createClass({
+	render(){
+		return (
+			<tbody>
+				{this.props.questions.map(x => {
+					return (
+						<tr key={x.key}>
+							<td>{x.key}</td>
+							<td>{this.state.answers[x.key] || ""}</td>
+							<td>{this.state.times[x.key] === undefined
+									? ""
+									: this.state.times[x.key]}</td>
+							<td><button onClick={() => this.populateAnswer(x)}>Run</button></td>
+						</tr>
+					)
+				})}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><button onClick={() => this.props.questions.forEach(x => this.populateAnswer(x))}>Run all</button></td>
+				</tr>
+			</tbody>
+		)
+	},
 	getInitialState(){
 		return {
 			answers : {},
@@ -30,42 +64,18 @@ var EulerTable = React.createClass({
 			});
 		}, 0);
 	},
+})
+var EulerTable = React.createClass({
 	render(){
 		return (
 			<table>
-				<thead>
-					<tr>
-						{this.props.headers.map(x => <th key={x}>{x}</th>)}
-					</tr>
-				</thead>
-				<tbody>
-					{this.props.questions.map(x => {
-						return (
-							<tr key={x.key}>
-								<td>{x.key}</td>
-								<td>{this.state.answers[x.key] || ""}</td>
-								<td>{this.state.times[x.key] === undefined 
-										? "" 
-										: this.state.times[x.key]}</td>
-								<td><button onClick={() => this.populateAnswer(x)}>Run</button></td>
-							</tr>
-						)
-					})}
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td><button onClick={() => this.props.questions.forEach(x => this.populateAnswer(x))}>Run all</button></td>
-					</tr>
-				</tbody>
+				<EulerHeader headers={["Number","Answer", "Time taken", ""]}/>
+				<EulerBody questions={Questions}/>
 			</table>
 		);
 	}
 });
 
 ReactDOM.render(
-	React.createElement(EulerTable, {
-		headers: ["Number","Answer", "Time taken", ""],
-		questions: Questions
-	}),
+	React.createElement(EulerTable, {}),
 	document.getElementById('main-body'));
