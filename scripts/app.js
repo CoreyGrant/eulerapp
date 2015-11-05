@@ -61,7 +61,7 @@ var EulerTable = React.createClass({
 			</table>
 		);
 	}
-})
+});
 
 ReactDOM.render(
 	React.createElement(EulerTable, {

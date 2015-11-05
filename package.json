@@ -28,6 +28,8 @@
 		"babel": "latest",
 		"grunt-babel": "latest",
 		"babelify": "latest",
-		"grunt-contrib-sass": "latest"
+		"grunt-contrib-sass": "latest",
+		"babel-preset-es2015": "latest",
+		"babel-preset-react": "latest"
 	}
 }
