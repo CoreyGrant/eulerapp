@@ -101,5 +101,31 @@ module.exports = {
 		var total = 1;
 		Object.keys(divisors).forEach(x => total = total * (divisors[x] + 1));
 		return total;
+	},
+	factorial: function(x){
+		return _.range(1, x+1).reduce((prev, cur) => prev * cur, 1);
+	},
+	multiply: function(value, multiplier){
+		if(typeof(value) === "number"){
+			value = value + "";
+		}
+		var remainder = 0, total = "";
+		value.split("").reverse().forEach((x, i) => {
+			var multiplied = (+x)*multiplier + remainder;
+			remainder = (multiplied - multiplied % 10)/10;
+			var prependRemainer = remainder && ((i+1) ===  value.length);
+			total = (prependRemainer ? remainder.toString() : "") + (multiplied % 10).toString() + total;
+		});
+		return total;
+	},
+	raise: function(num, power){
+		return _.range(1, power+1)
+			.reduce(
+				(prev, cur) => this.multiply(prev, num),
+				1)
+	},
+	letterScores : {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10,"K":11,"L":12,"M":13,"N":14,"O":15,"P":16,"Q":17,"R":18,"S":19,"T":20,"U":21,"V":22,"W":23,"X":24,"Y":25,"Z":26},
+	wordScore: function(name){
+		return name.split("").reduce((prev, cur) => prev + this.letterScores[cur], 0);
 	}
 }

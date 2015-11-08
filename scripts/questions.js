@@ -5,13 +5,13 @@ var Fraction = classes.Fraction;
 module.exports = [
 	{
 		key: 1,
-		answer: () => _.range(1, 1000)
+		run: () => _.range(1, 1000)
 			.filter(x => !(x%3) || !(x%5))
 			.reduce((prev, cur) => prev + cur)
 	},
 	{
 		key: 2,
-		answer: () => {
+		run: () => {
 			var first = 1;
 			var second = 2;
 			var sum = 2;
@@ -30,7 +30,7 @@ module.exports = [
 	},
 	{
 		key: 3,
-		answer: () => {
+		run: () => {
 			var number = 600851475143;
 			var factors = helpers.getFactors(number);
 			return _.max(Object.keys(factors));
@@ -38,7 +38,7 @@ module.exports = [
 	},
 	{
 		key: 4,
-		answer: () => {
+		run: () => {
 			var palindromes = [];
 			for(var i = 999; i>0; i--){
 				for(var j = 999; j>=i; j--){
@@ -52,7 +52,7 @@ module.exports = [
 	},
 	{
 		key: 5,
-		answer: () => {
+		run: () => {
 			var uniqueFactors = {};
 			_.range(2, 21).forEach(x => {
 				var factors = helpers.getFactors(x);
@@ -71,7 +71,7 @@ module.exports = [
 	},
 	{
 		key: 6,
-		answer: () => {
+		run: () => {
 			var tNumber = helpers.getTriangleNumber(100);
 			return Math.abs(
 				_.range(1, 101)
@@ -82,7 +82,7 @@ module.exports = [
 	},
 	{
 		key: 7,
-		answer: () => {
+		run: () => {
 			var primes = [];
 			var upper = 0;
 			while(primes.length < 10001){
@@ -96,7 +96,7 @@ module.exports = [
 	},
 	{
 		key: 8,
-		answer: (data) => {
+		run: (data) => {
 			var totals = [];
 			for(var i = 0; i < 987; i++){
 				totals.push(
@@ -108,7 +108,7 @@ module.exports = [
 	},
 	{
 		key: 9,
-		answer: () => {
+		run: () => {
 			var a, b, c;
 			var s = 1000;
 			var m = 0, k = 0, n = 0, d = 0;
@@ -144,11 +144,11 @@ module.exports = [
 	}, 
 	{
 		key: 10,
-		answer: () => helpers.getPrimes(2000000).reduce((prev, cur) => prev ? prev += cur : cur)
+		run: () => helpers.getPrimes(2000000).reduce((prev, cur) => prev ? prev += cur : cur)
 	},
 	{
 		key: 11,
-		answer: (data) => {
+		run: (data) => {
 			var stringBits = data.split(" ").map(x => +x);
 			var products = [];
 			// Left-right
@@ -200,7 +200,7 @@ module.exports = [
 	},
 	{
 		key: 12,
-		answer: () => {
+		run: () => {
 			// Pre-calculate some primes to help speed things up
 			var primes = helpers.getPrimes(75000);
 			for(var i = 50;;i++){
@@ -214,7 +214,7 @@ module.exports = [
 	},
 	{
 		key: 13,
-		answer: (data) => {
+		run: (data) => {
 			var sum = "";
 			var addDigit = (num, oldRemainder) => {
 				var total = oldRemainder;
@@ -236,7 +236,7 @@ module.exports = [
 	},
 	{
 		key: 14,
-		answer: () => {
+		run: () => {
 			var previousAnswers = {};
 			for(var i = 1; i<1000000; i++){
 				var j = i;
@@ -266,8 +266,71 @@ module.exports = [
 		}
 	},
 	{
+		key: 15,
+		run: () => helpers.factorial(40) / Math.pow(helpers.factorial(20), 2)
+	},
+	{
+		key: 16,
+		run: () => helpers.raise(2, 1000)
+			.split("").map(x => +x)
+			.reduce(
+				(prev, cur) => prev + cur,
+				0)
+	},
+	{
+		key: 20,
+		run: () => _.range(1, 101)
+			.reduce(
+				(prev, cur) => helpers.multiply(prev, cur),
+				1)
+			.split("").map(x => +x)
+			.reduce(
+				(prev, cur) => prev + cur,
+				0)
+	},
+	{
+		key: 22,
+		run: (data) => {
+			var letters = helpers.letterScores;
+			return _.sortBy(data, x => x)
+				.map((x, i) => helpers.wordScore(x) * (i+1))
+				.reduce((prev, cur) => prev + cur, 0);
+		}
+	},
+	{
+		key: 29,
+		run: () =>{
+			var nums = _.range(2, 101);
+			var values = {};
+			nums.forEach(x => {
+				nums.forEach(y => {
+					var value = helpers.raise(x, y);
+					values[value] = x + ":" + y
+				});
+			});
+			console.log(values)
+			return Object.keys(values).length;
+		}
+	},
+	{
+		key: 30,
+		run: () => {
+			var upperBound = 350000;
+			var total = 0;
+			for(var i = 2; i< upperBound; i++){
+				var powerSum = (i+"")
+					.split("")
+					.reduce((prev, cur) => prev + Math.pow(cur, 5), 0);
+				if(powerSum === i){
+					total += i;
+				}
+			}
+			return total;
+		}
+	},
+	{
 		key: 33,
-		answer: () => {
+		run: () => {
 			var possibleFractions = [];
 			for(var i=10; i< 100; i++){
 				if(!(i%10)){
@@ -293,7 +356,7 @@ module.exports = [
 					}
 					if(topDigits[1] === bottomDigits[0]){
 						if(x.equals(new Fraction(+topDigits[0], +bottomDigits[1]))){
-							returnrue;
+							return true;
 						}
 					}
 					return false;
@@ -307,8 +370,85 @@ module.exports = [
 		}
 	},
 	{
+		key: 34,
+		run: () =>{
+			var upperBound = 2540161;
+			var factorials = {
+				0:1,
+				1:1,
+				2:2,
+				3:6,
+				4:24,
+				5:120,
+				6:720,
+				7:720*7,
+				8:720*7*8,
+				9:720*7*8*9
+			};
+			var total = 0;
+			for(var i = 3; i< upperBound; i++){
+				var sum = (i + "")
+					.split("")
+					.reduce((prev, cur) => prev + factorials[+cur], 0)
+				if(sum === i){
+					total += sum;
+				}
+			}
+			return total;
+		}
+	},
+	{
+		key:35,
+		run: () => {
+			function getRotations(number){
+				var ns = number + "";
+				return _.range(0, ns.length)
+					.map(x => ns.substring(ns.length-x) + ns.substring(0, ns.length-x))
+					.map(x => +x);
+			}
+			var primeSet = {};
+			var primes = helpers.getPrimes(1000000);
+			primes.forEach(x =>{
+				primeSet[x] = true;
+			});
+			var total = 0;
+			for(var i = 0; i<primes.length; i++){
+				var prime = primes[i];
+				if(!primeSet[prime]){
+					continue;
+				}
+				var rotations = getRotations(prime);
+				if(!rotations.every(x => primeSet[x])){
+					rotations.forEach(x => primeSet[x] = false);
+					continue;
+				}
+				total++;
+			}
+			return total;
+		}
+	},
+	{
+		key: 36,
+		run: () => _.range(1,1000000)
+			.filter(x => helpers.isPalindrome(x) && helpers.isPalindrome(x.toString(2)))
+			.reduce((prev, cur) => prev + cur, 0)
+		
+	},
+	// {
+	// 	key: 37,
+	// 	run: () =>{
+	// 		var matching = [];
+	// 		var primes;
+	// 		var upperLimit = 10000;
+	// 		while(matching.length < 11){
+	// 			primes = getPrimes(10000, primes);
+
+	// 		}
+	// 	}
+	// },
+	{
 		key: 40,
-		answer: () => {
+		run: () => {
 			var bigString = "0";
 			var i = 1;
 			while(bigString.length <= 1000001){
@@ -325,8 +465,33 @@ module.exports = [
 		}
 	},
 	{
+		key: 42,
+		run: (data) =>{
+			var maxTriangle = _.max(data, x => x.length).length*26;
+			var newest = 1;
+			var triangles = [];
+			for(var i = 1; newest < maxTriangle; i++){
+				newest = helpers.getTriangleNumber(i);
+				triangles.push(newest);
+			}
+			var total = 0;
+			data.forEach(x => {
+				if(triangles.indexOf(helpers.wordScore(x)) > -1){
+					total++;
+				}
+			})
+			return total;
+		}
+	},
+	// {
+	// 	key: 44,
+	// 	run: () =>{
+			
+	// 	}
+	// },
+	{
 		key: 45,
-		answer: () => {
+		run: () => {
 			// Triangle = pentagon = hexagon
 			// Searching strategy:
 			// - get chunk of triangles

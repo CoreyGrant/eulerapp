@@ -2,7 +2,8 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-babel');
-	grunt.loadNpmTasks('grunt-contrib-sass')
+	grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -39,9 +40,26 @@ module.exports = function(grunt){
 					ext: '.css'
 				}]
 			}
+		},
+		babel:{
+			options: {
+				presets: ['es2015']
+			},
+			dist: {
+				files: {
+					"tests/src/helpers.js" : "scripts/helpers.js"
+				}
+			}
+		},
+		jasmine: {
+			src: 'tests/src/*.js',
+			options: {
+				specs: 'tests/specs/*.js',
+			}
 		}
 	});
 	grunt.registerTask('js', ['browserify']);
 	grunt.registerTask('css', ['sass']);
 	grunt.registerTask('default', ['browserify', 'sass']);
+	grunt.registerTask('tests', ['babel', 'jasmine']);
 }

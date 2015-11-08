@@ -18,15 +18,19 @@ var EulerBody = React.createClass({
 	render(){
 		return (
 			<tbody>
-				{this.props.questions.map(x => {
+				{this.state.questions.map(x => {
+					var answer = x.answer;
+					var time = x.time === undefined ? "" : x.time
 					return (
 						<tr key={x.key}>
 							<td>{x.key}</td>
-							<td>{this.state.answers[x.key] || ""}</td>
-							<td>{this.state.times[x.key] === undefined
-									? ""
-									: this.state.times[x.key]}</td>
-							<td><button onClick={() => this.populateAnswer(x)}>Run</button></td>
+							<td>{answer || ""}</td>
+							<td>{time}</td>
+							<td>
+								<button onClick={() => this.populateAnswer(x)}>
+									{answer ? "Rerun" : "Run"}
+								</button>
+							</td>
 						</tr>
 					)
 				})}
@@ -34,35 +38,29 @@ var EulerBody = React.createClass({
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><button onClick={() => this.props.questions.forEach(x => this.populateAnswer(x))}>Run all</button></td>
+					<td><button onClick={() => this.state.questions.forEach(this.populateAnswer)}>Run all</button></td>
 				</tr>
 			</tbody>
 		)
 	},
 	getInitialState(){
 		return {
-			answers : {},
-			times: {}
+			questions: this.props.questions
 		}
 	},
 	populateAnswer(x){
-		setTimeout(() => {
-			var answers = this.state.answers;
-			if(answers[x.key]){
-				return;
-			}
-			var times = this.state.times;
-			var timeStart = new Date().getTime();
-			var answer = x.answer(data[x.key]);
-			var timeEnd = new Date().getTime();
-			answers[x.key] = answer;
-			var difference = timeEnd - timeStart;
-			times[x.key] = difference;
-			this.setState({
-				answers: answers,
-				times: times
-			});
-		}, 0);
+		var key = x.key;
+		var questions = this.state.questions;
+		var question = questions.find(y => y.key === key);
+		var timeStart = new Date().getTime();
+		var answer = x.run(data[x.key]);
+		var timeEnd = new Date().getTime();
+		var difference = timeEnd - timeStart;
+		question.time = difference;
+		question.answer = answer;
+		this.setState({
+			questions: questions
+		});
 	},
 })
 var EulerTable = React.createClass({

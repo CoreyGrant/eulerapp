@@ -13,10 +13,8 @@
 		"jade": "~1.11.0",
 		"morgan": "~1.6.1",
 		"serve-favicon": "~2.3.0",
-		"underscore": "latest",
 		"react": "latest",
 		"react-dom": "latest",
-		"jquery": "latest",
 		"lodash": "latest"
 	},
 	"devDependencies": {
@@ -30,6 +28,9 @@
 		"babelify": "latest",
 		"grunt-contrib-sass": "latest",
 		"babel-preset-es2015": "latest",
-		"babel-preset-react": "latest"
+		"babel-preset-react": "latest",
+		"grunt-contrib-jasmine": "latest",
+		"jasmine": "latest",
+		"phantomjs": "latest"
 	}
 }

@@ -1,6 +1,6 @@
 import helpers from "./helpers.js"
 
-class Fraction{
+var Fraction = class Fraction{
 	constructor(numerator, denominator){
 		this.numerator = numerator;
 		this.denominator = denominator;
@@ -29,4 +29,8 @@ class Fraction{
 	toString(){
 		return this.numerator + "/" + this.denominator;
 	}
+}
+
+module.exports = {
+	Fraction: Fraction
 }
