@@ -1,7 +1,9 @@
+/*jshint -W018 */
+
 import _ from 'lodash';
 import helpers from './helpers.js';
 import classes from './classes.js';
-var Fraction = classes.Fraction;
+const Fraction = classes.Fraction;
 module.exports = [
 	{
 		key: 1,
@@ -12,13 +14,13 @@ module.exports = [
 	{
 		key: 2,
 		run: () => {
-			var first = 1;
-			var second = 2;
-			var sum = 2;
+			let first = 1;
+			let second = 2;
+			let sum = 2;
 			while(true){
-				var newSecond = first + second;
-				var first = second;
-				var second = newSecond;
+				const newSecond = first + second;
+				first = second;
+				second = newSecond;
 				if(newSecond > 4000000){
 					return sum;
 				}
@@ -31,17 +33,17 @@ module.exports = [
 	{
 		key: 3,
 		run: () => {
-			var number = 600851475143;
-			var factors = helpers.getFactors(number);
+			const number = 600851475143;
+			const factors = helpers.getFactors(number);
 			return _.max(Object.keys(factors));
 		}
 	},
 	{
 		key: 4,
 		run: () => {
-			var palindromes = [];
-			for(var i = 999; i>0; i--){
-				for(var j = 999; j>=i; j--){
+			const palindromes = [];
+			for(let i = 999; i>0; i--){
+				for(let j = 999; j>=i; j--){
 					if(helpers.isPalindrome(i*j)){
 						palindromes.push(i*j);
 					}
@@ -53,15 +55,15 @@ module.exports = [
 	{
 		key: 5,
 		run: () => {
-			var uniqueFactors = {};
+			const uniqueFactors = {};
 			_.range(2, 21).forEach(x => {
-				var factors = helpers.getFactors(x);
+				const factors = helpers.getFactors(x);
 				Object.keys(factors).forEach(x => {
 					if(!uniqueFactors[x] || (uniqueFactors[x] && uniqueFactors[x] < factors[x])){
 						uniqueFactors[x] = factors[x];
 					}
-				})
-			})
+				});
+			});
 			return Object.keys(uniqueFactors).reduce((prev, cur)=>
 				prev 
 					? prev *= Math.pow((cur), uniqueFactors[cur])
@@ -72,19 +74,19 @@ module.exports = [
 	{
 		key: 6,
 		run: () => {
-			var tNumber = helpers.getTriangleNumber(100);
+			const tNumber = helpers.getTriangleNumber(100);
 			return Math.abs(
 				_.range(1, 101)
 					.map(x => x*x)
 					.reduce((prev, cur) => prev ? prev + cur : cur) 
-				- tNumber * tNumber)
+				- tNumber * tNumber);
 		}
 	},
 	{
 		key: 7,
 		run: () => {
-			var primes = [];
-			var upper = 0;
+			let primes = [];
+			let upper = 0;
 			while(primes.length < 10001){
 				upper += 10000;
 				primes = primes.length
@@ -97,8 +99,8 @@ module.exports = [
 	{
 		key: 8,
 		run: (data) => {
-			var totals = [];
-			for(var i = 0; i < 987; i++){
+			const totals = [];
+			for(let i = 0; i < 987; i++){
 				totals.push(
 					data.substring(i, i+13).split("")
 						.reduce((prev, cur)=> prev ? prev *= cur : cur));
@@ -109,21 +111,21 @@ module.exports = [
 	{
 		key: 9,
 		run: () => {
-			var a, b, c;
-			var s = 1000;
-			var m = 0, k = 0, n = 0, d = 0;
-			var found = false;
+			let a, b, c;
+			let s = 1000;
+			let m = 0, k = 0, n = 0, d = 0;
+			let found = false;
 
-			var mlimit =  Math.sqrt(s / 2);
+			const mlimit =  Math.sqrt(s / 2);
 			for (m = 2; m <= mlimit; m++) {
-				if ((s / 2) % m == 0) {
-					if (m % 2 == 0) {
+				if ((s / 2) % m === 0) {
+					if (m % 2 === 0) {
 						k = m + 1;
 					} else {
 						k = m + 2;
 					}
 					while (k < 2 * m && k <= s / (2 * m)) {
-						if (s / (2 * m) % k == 0 && helpers.getGcd(k, m) == 1) {
+						if (s / (2 * m) % k === 0 && helpers.getGcd(k, m) == 1) {
 							d = s / 2 / (k * m);
 							n = k - m;
 							a = d*(m * m - n * n);
@@ -139,7 +141,7 @@ module.exports = [
 					break;
 				}
 			}
-			return a * b * c
+			return a * b * c;
 		}
 	}, 
 	{
@@ -149,47 +151,47 @@ module.exports = [
 	{
 		key: 11,
 		run: (data) => {
-			var stringBits = data.split(" ").map(x => +x);
-			var products = [];
+			const stringBits = data.split(" ").map(x => +x);
+			const products = [];
 			// Left-right
-			for(var i = 0; i < 17; i++){
-				for(var j = 0; j < 20; j++){
-					var product = 1;
-					for(var k = 0; k < 4; k++){
-						product *= stringBits[i + 20 * j + k]
+			for(let i = 0; i < 17; i++){
+				for(let j = 0; j < 20; j++){
+					let product = 1;
+					for(let k = 0; k < 4; k++){
+						product *= stringBits[i + 20 * j + k];
 					}
 					products.push(product);
 				}
 			}
 
 			// Top-bottom
-			for(var i = 0; i < 20; i++){
-				for(var j = 0; j < 17; j++){
-					var product = 1;
-					for(var k = 0; k < 4; k++){
-						product *= stringBits[i + 20 * j + 20*k]
+			for(let i = 0; i < 20; i++){
+				for(let j = 0; j < 17; j++){
+					let product = 1;
+					for(let k = 0; k < 4; k++){
+						product *= stringBits[i + 20 * j + 20*k];
 					}
 					products.push(product);
 				}
 			}
 
 			// TopLeft-BottomRight
-			for(var i = 0; i < 17; i++){
-				for(var j = 0; j < 17; j++){
-					var product = 1;
-					for(var k = 0; k < 4; k++){
-						product *= stringBits[i + 20 * j + 21*k]
+			for(let i = 0; i < 17; i++){
+				for(let j = 0; j < 17; j++){
+					let product = 1;
+					for(let k = 0; k < 4; k++){
+						product *= stringBits[i + 20 * j + 21*k];
 					}
 					products.push(product);
 				}
 			}
 
 			// BottomLeft-TopRight
-			for(var i = 0; i < 17; i++){
-				for(var j = 19; j > 3; j--){
-					var product = 1;
-					for(var k = 0; k < 4; k++){
-						product *= stringBits[i + 20 * j - 19*k]
+			for(let i = 0; i < 17; i++){
+				for(let j = 19; j > 3; j--){
+					let product = 1;
+					for(let k = 0; k < 4; k++){
+						product *= stringBits[i + 20 * j - 19*k];
 					}
 					products.push(product);
 				}
@@ -202,10 +204,10 @@ module.exports = [
 		key: 12,
 		run: () => {
 			// Pre-calculate some primes to help speed things up
-			var primes = helpers.getPrimes(75000);
-			for(var i = 50;;i++){
-				var tNumber = helpers.getTriangleNumber(i);
-				var divisorCount = helpers.getDivisorCount(tNumber, primes);
+			const primes = helpers.getPrimes(75000);
+			for(let i = 50;;i++){
+				const tNumber = helpers.getTriangleNumber(i);
+				let divisorCount = helpers.getDivisorCount(tNumber, primes);
 				if(divisorCount > 500){
 					return tNumber;
 				}
@@ -215,17 +217,17 @@ module.exports = [
 	{
 		key: 13,
 		run: (data) => {
-			var sum = "";
-			var addDigit = (num, oldRemainder) => {
-				var total = oldRemainder;
-				data.forEach(x => total += +x[49-num])
-				var digitToKeep = total % 10;
-				var remainder = (total - digitToKeep)/10;
+			let sum = "";
+			const addDigit = (num, oldRemainder) => {
+				let total = oldRemainder;
+				data.forEach(x => total += +x[49-num]);
+				const digitToKeep = total % 10;
+				const remainder = (total - digitToKeep)/10;
 				sum = digitToKeep.toString() + sum;
 				return remainder;
-			}
-			var lastRemainder = 0;
-			for(var i = 0; i < 50; i++){
+			};
+			let lastRemainder = 0;
+			for(let i = 0; i < 50; i++){
 				lastRemainder = addDigit(i, lastRemainder);
 				if(i == 49){
 					sum = lastRemainder.toString() + sum;
@@ -237,10 +239,10 @@ module.exports = [
 	{
 		key: 14,
 		run: () => {
-			var previousAnswers = {};
-			for(var i = 1; i<1000000; i++){
-				var j = i;
-				var count = 0;
+			const previousAnswers = {};
+			for(let i = 1; i<1000000; i++){
+				let j = i;
+				let count = 0;
 				while(j > 1){
 					if(previousAnswers[j]){
 						previousAnswers[i] = previousAnswers[j] + count;
@@ -252,11 +254,11 @@ module.exports = [
 				}
 				previousAnswers[i] = count;
 			}
-			var max = {
+			const max = {
 				value: 0,
 				number: 0
 			};
-			for(var k in previousAnswers){
+			for(let k in previousAnswers){
 				if(previousAnswers[k] > max.value){
 					max.number = k;
 					max.value = previousAnswers[k];
@@ -278,6 +280,12 @@ module.exports = [
 				0)
 	},
 	{
+		key: 17,
+		run: () => {
+			
+		}
+	},
+	{
 		key: 20,
 		run: () => _.range(1, 101)
 			.reduce(
@@ -291,7 +299,7 @@ module.exports = [
 	{
 		key: 22,
 		run: (data) => {
-			var letters = helpers.letterScores;
+			const letters = helpers.letterScores;
 			return _.sortBy(data, x => x)
 				.map((x, i) => helpers.wordScore(x) * (i+1))
 				.reduce((prev, cur) => prev + cur, 0);
@@ -300,25 +308,25 @@ module.exports = [
 	{
 		key: 29,
 		run: () =>{
-			var nums = _.range(2, 101);
-			var values = {};
+			const nums = _.range(2, 101);
+			const values = {};
 			nums.forEach(x => {
 				nums.forEach(y => {
-					var value = helpers.raise(x, y);
-					values[value] = x + ":" + y
+					const value = helpers.raise(x, y);
+					values[value] = x + ":" + y;
 				});
 			});
-			console.log(values)
+			console.log(values);
 			return Object.keys(values).length;
 		}
 	},
 	{
 		key: 30,
 		run: () => {
-			var upperBound = 350000;
-			var total = 0;
-			for(var i = 2; i< upperBound; i++){
-				var powerSum = (i+"")
+			const upperBound = 350000;
+			let total = 0;
+			for(let i = 2; i< upperBound; i++){
+				const powerSum = (i+"")
 					.split("")
 					.reduce((prev, cur) => prev + Math.pow(cur, 5), 0);
 				if(powerSum === i){
@@ -331,12 +339,12 @@ module.exports = [
 	{
 		key: 33,
 		run: () => {
-			var possibleFractions = [];
-			for(var i=10; i< 100; i++){
+			const possibleFractions = [];
+			for(let i=10; i< 100; i++){
 				if(!(i%10)){
 					continue;
 				}
-				for(var j=10; j< 100 && j<i; j++){
+				for(let j=10; j< 100 && j<i; j++){
 					if(!(j%10)){
 						continue;
 					}
@@ -345,10 +353,10 @@ module.exports = [
 			}
 			// A fraction "cancels" if the denom and numer share a digit, unless both are divisible by 10.
 			// There should be 4 of these which equal their actually reduced state.
-			var matchingFractions = possibleFractions
+			const matchingFractions = possibleFractions
 				.filter(x => {
-					var topDigits = (x.numerator + "").split("");
-					var bottomDigits = (x.denominator + "").split("");
+					const topDigits = (x.numerator + "").split("");
+					const bottomDigits = (x.denominator + "").split("");
 					if(topDigits[0] === bottomDigits[1]){
 						if(x.equals(new Fraction(+topDigits[1], +bottomDigits[0]))){
 							return true;
@@ -361,8 +369,8 @@ module.exports = [
 					}
 					return false;
 				}
-			)
-			var endFraction;
+			);
+			let endFraction;
 			matchingFractions.forEach(x => endFraction = endFraction 
 				? endFraction.multiply(x)
 				: x);
@@ -372,8 +380,8 @@ module.exports = [
 	{
 		key: 34,
 		run: () =>{
-			var upperBound = 2540161;
-			var factorials = {
+			const upperBound = 2540161;
+			const factorials = {
 				0:1,
 				1:1,
 				2:2,
@@ -385,11 +393,11 @@ module.exports = [
 				8:720*7*8,
 				9:720*7*8*9
 			};
-			var total = 0;
-			for(var i = 3; i< upperBound; i++){
-				var sum = (i + "")
+			let total = 0;
+			for(let i = 3; i< upperBound; i++){
+				const sum = (i + "")
 					.split("")
-					.reduce((prev, cur) => prev + factorials[+cur], 0)
+					.reduce((prev, cur) => prev + factorials[+cur], 0);
 				if(sum === i){
 					total += sum;
 				}
@@ -401,23 +409,23 @@ module.exports = [
 		key:35,
 		run: () => {
 			function getRotations(number){
-				var ns = number + "";
+				const ns = number + "";
 				return _.range(0, ns.length)
 					.map(x => ns.substring(ns.length-x) + ns.substring(0, ns.length-x))
 					.map(x => +x);
 			}
-			var primeSet = {};
-			var primes = helpers.getPrimes(1000000);
+			const primeSet = {};
+			const primes = helpers.getPrimes(1000000);
 			primes.forEach(x =>{
 				primeSet[x] = true;
 			});
-			var total = 0;
-			for(var i = 0; i<primes.length; i++){
-				var prime = primes[i];
+			let total = 0;
+			for(let i = 0; i<primes.length; i++){
+				const prime = primes[i];
 				if(!primeSet[prime]){
 					continue;
 				}
-				var rotations = getRotations(prime);
+				const rotations = getRotations(prime);
 				if(!rotations.every(x => primeSet[x])){
 					rotations.forEach(x => primeSet[x] = false);
 					continue;
@@ -449,8 +457,8 @@ module.exports = [
 	{
 		key: 40,
 		run: () => {
-			var bigString = "0";
-			var i = 1;
+			let bigString = "0";
+			let i = 1;
 			while(bigString.length <= 1000001){
 				bigString += i.toString();
 				i++;
@@ -467,26 +475,26 @@ module.exports = [
 	{
 		key: 42,
 		run: (data) =>{
-			var maxTriangle = _.max(data, x => x.length).length*26;
-			var newest = 1;
-			var triangles = [];
-			for(var i = 1; newest < maxTriangle; i++){
+			const maxTriangle = _.max(data, x => x.length).length*26;
+			let newest = 1;
+			const triangles = [];
+			for(let i = 1; newest < maxTriangle; i++){
 				newest = helpers.getTriangleNumber(i);
 				triangles.push(newest);
 			}
-			var total = 0;
+			let total = 0;
 			data.forEach(x => {
 				if(triangles.indexOf(helpers.wordScore(x)) > -1){
 					total++;
 				}
-			})
+			});
 			return total;
 		}
 	},
 	// {
 	// 	key: 44,
 	// 	run: () =>{
-			
+
 	// 	}
 	// },
 	{
@@ -498,22 +506,22 @@ module.exports = [
 			// - get all matching pentagons
 			// - try to match to hexagons
 			// - haven't found the second, get more triangles and redo
-			var matching = [];
-			var minTriangleIndex = 5;
-			var maxTriangleIndex = 0;
-			var minPentagonIndex = 5;
-			var maxPentagonIndex;
-			var minHexagonIndex = 5;
-			var maxHexagonIndex;
+			const matching = [];
+			let minTriangleIndex = 5;
+			let maxTriangleIndex = 0;
+			let minPentagonIndex = 5;
+			let maxPentagonIndex;
+			let minHexagonIndex = 5;
+			let maxHexagonIndex;
 			while(matching.length < 2){
 				maxTriangleIndex += 1000;
 				// get set of triangle numbers
-				var triangleNumbers = _
+				const triangleNumbers = _
 					.range(minTriangleIndex, maxTriangleIndex)
 					.map(x => helpers.getTriangleNumber(x));
 				// get matching pentagonal numbers
-				var matchingPentagonals = [];
-				var currentPentagonal = 0;
+				const matchingPentagonals = [];
+				let currentPentagonal = 0;
 				while(currentPentagonal < _.last(triangleNumbers)){
 					currentPentagonal = helpers.getPentagonalNumber(minPentagonIndex);
 					if(triangleNumbers.indexOf(currentPentagonal) > -1){
@@ -521,7 +529,7 @@ module.exports = [
 					}
 					minPentagonIndex++;
 				}// get hexagonals which match the matching pentagonals
-				var currentHexagonal = 0;
+				let currentHexagonal = 0;
 				while(currentHexagonal < _.last(matchingPentagonals)){
 					currentHexagonal = helpers.getHexagonalNumber(minHexagonIndex);
 					if(matchingPentagonals.indexOf(currentHexagonal) > -1){
@@ -533,4 +541,4 @@ module.exports = [
 			return matching[1];
 		}
 	}
-]
+];

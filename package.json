@@ -30,6 +30,8 @@
 		"babel-preset-es2015": "latest",
 		"babel-preset-react": "latest",
 		"grunt-contrib-jasmine": "latest",
+		"react-tools": "latest",
+		"grunt-jsxhint": "latest",
 		"jasmine": "latest",
 		"phantomjs": "latest"
 	}

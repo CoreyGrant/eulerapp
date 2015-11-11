@@ -1,4 +1,4 @@
-import helpers from "./helpers.js"
+import helpers from "./helpers.js";
 
 var Fraction = class Fraction{
 	constructor(numerator, denominator){
@@ -29,8 +29,8 @@ var Fraction = class Fraction{
 	toString(){
 		return this.numerator + "/" + this.denominator;
 	}
-}
+};
 
 module.exports = {
 	Fraction: Fraction
-}
+};

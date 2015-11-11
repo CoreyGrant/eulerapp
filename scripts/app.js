@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import Questions from './questions.js';
-import _ from 'lodash'
-import data from './data.js'
+import _ from 'lodash';
+import data from './data.js';
 var EulerHeader = React.createClass({
 	render(){
 		return (
@@ -13,7 +13,7 @@ var EulerHeader = React.createClass({
 			</thead>
 		)
 	}
-})
+});
 var EulerBody = React.createClass({
 	render(){
 		return (
@@ -46,7 +46,7 @@ var EulerBody = React.createClass({
 	getInitialState(){
 		return {
 			questions: this.props.questions
-		}
+		};
 	},
 	populateAnswer(x){
 		var key = x.key;
@@ -62,7 +62,7 @@ var EulerBody = React.createClass({
 			questions: questions
 		});
 	},
-})
+});
 var EulerTable = React.createClass({
 	render(){
 		return (

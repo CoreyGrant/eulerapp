@@ -4,7 +4,7 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-babel');
 	grunt.loadNpmTasks('grunt-contrib-sass');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
-	
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		browserify:{
@@ -18,6 +18,12 @@ module.exports = function(grunt){
 				files: {
 					"public/javascripts/eulerApp.js": "scripts/app.js"
 				}
+			}
+		},
+		jshint: {
+			all: ['scripts/classes.js', 'scripts/data.js', 'scripts/helpers.js', 'scripts/questions.js', ],
+			options: {
+				jshintrc: '.jshintrc',
 			}
 		},
 		watch:{
@@ -60,6 +66,6 @@ module.exports = function(grunt){
 	});
 	grunt.registerTask('js', ['browserify']);
 	grunt.registerTask('css', ['sass']);
-	grunt.registerTask('default', ['browserify', 'sass']);
+	grunt.registerTask('default', ['jshint', 'browserify', 'sass']);
 	grunt.registerTask('tests', ['babel', 'jasmine']);
 }

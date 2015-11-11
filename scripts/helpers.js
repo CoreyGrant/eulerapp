@@ -1,3 +1,5 @@
+/*jshint -W018 */
+
 import _ from 'lodash';
 
 module.exports = {
@@ -5,7 +7,7 @@ module.exports = {
 		if(number == 2){return true;}
 		var possibles = existingPrimes
 			? _.takeWhile(existingPrimes, x => x <= Math.sqrt(number))
-			: [2].concat(_.range(3, Math.ceil(Math.sqrt(number))+2, 2))
+			: [2].concat(_.range(3, Math.ceil(Math.sqrt(number))+2, 2));
 		// if not enough possible primes were supplied, we need to make up
 		// the difference
 		if(possibles[possibles.length - 1] < Math.sqrt(number)){
@@ -41,7 +43,7 @@ module.exports = {
 		var factors = [];
 		var upperPrime = existingPrimes
 			? existingPrimes[existingPrimes.length - 1]
-			: 1000
+			: 1000;
 		var primes = existingPrimes || this.getPrimes(upperPrime);
 		while(true){
 			var found = false;
@@ -89,7 +91,7 @@ module.exports = {
 			y = a;
 		}
 
-		while (x % y != 0) {
+		while (x % y !== 0) {
 			var temp = x;
 			x = y;
 			y = temp % x;
@@ -122,10 +124,13 @@ module.exports = {
 		return _.range(1, power+1)
 			.reduce(
 				(prev, cur) => this.multiply(prev, num),
-				1)
+				1);
 	},
 	letterScores : {"A":1,"B":2,"C":3,"D":4,"E":5,"F":6,"G":7,"H":8,"I":9,"J":10,"K":11,"L":12,"M":13,"N":14,"O":15,"P":16,"Q":17,"R":18,"S":19,"T":20,"U":21,"V":22,"W":23,"X":24,"Y":25,"Z":26},
 	wordScore: function(name){
 		return name.split("").reduce((prev, cur) => prev + this.letterScores[cur], 0);
+	},
+	letterCount: function(number){
+		
 	}
-}
+};
