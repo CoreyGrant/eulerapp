@@ -3,6 +3,10 @@ import React from 'react';
 import Questions from './questions.js';
 import _ from 'lodash';
 import data from './data.js';
+import $ from 'jquery';
+
+window.$ = $;
+
 var EulerHeader = React.createClass({
 	render(){
 		return (

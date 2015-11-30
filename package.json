@@ -15,7 +15,10 @@
 		"serve-favicon": "~2.3.0",
 		"react": "latest",
 		"react-dom": "latest",
-		"lodash": "latest"
+		"lodash": "latest",
+		"request": "latest",
+		"cheerio": "latest",
+		"jquery": "latest"
 	},
 	"devDependencies": {
 		"grunt": "latest",
