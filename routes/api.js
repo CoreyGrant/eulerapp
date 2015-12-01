@@ -10,17 +10,17 @@ router.get('/problem', function(req, res, next) {
 		res.status(400).send("Expected id parameter");
 		return;
 	}
-	const filePath = 'data/questions.json'
-	fs.readFile(filePath, function(error, data){
-		if(error){
-			throw error;
-		}
-		var file = JSON.parse(data.toString());
-		var fileData = file[id];
-		if(fileData){
-			res.send(fileData)
-			return;
-		} else {
+	// const filePath = 'data/questions.json'
+	// fs.readFile(filePath, function(error, data){
+	// 	if(error){
+	// 		throw error;
+	// 	}
+		var file = {} //JSON.parse(data.toString());
+	// 	var fileData = file[id];
+	// 	if(fileData){
+	// 		res.send(fileData)
+	// 		return;
+	// 	} else {
 			const url = "https://projecteuler.net/problem=" + id;
 			request(url, function(error, response, html){
 				if(error){
@@ -31,17 +31,18 @@ router.get('/problem', function(req, res, next) {
 				var content = $('#content')
 				fileData.title = content.find('h2').text();
 				// ToDo: Figure out how to replace with reduce
+				
 				var questionDesc = "";
 				content
 					.find('.problem_content')
 					.find('p')
 					.each(function(){questionDesc += " " + $(this).text()});
 				fileData.questionDesc = questionDesc.trim();
-				fs.writeFile(filePath, JSON.stringify(file), function(err){});
+				//fs.writeFile(filePath, JSON.stringify(file), function(err){});
 				res.send(fileData);
 			});
-		}
-	});
+	// 	}
+	// });
 });
 
 module.exports = router;

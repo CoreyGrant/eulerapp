@@ -9,7 +9,6 @@ a {
 
 table{
 	width: 100%;
-	max-width: 800px;
 	min-width: 500px;
 	padding: 0 10px;
 	max-height: 1000px;
@@ -31,7 +30,16 @@ tr{
 	height: 25px;
 }
 td, th{
-	width: 25%;
+	&:nth-child(1){
+		width: 90px;
+	}
+	&:nth-child(2){
+		min-width: 300px;
+		width: 40%;
+	}
+	&:nth-child(3){
+		min-width: 150px;
+	}
 	text-align: center;
 	> button{
 		width: 100%;
