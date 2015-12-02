@@ -316,7 +316,6 @@ module.exports = [
 					values[value] = x + ":" + y;
 				});
 			});
-			console.log(values);
 			return Object.keys(values).length;
 		}
 	},

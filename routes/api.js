@@ -3,6 +3,8 @@ var router = express.Router();
 var request = require('request');
 var cheerio = require('cheerio');
 var fs = require('fs');
+var NodeCache = require('node-cache');
+var cache = new NodeCache();
 
 router.get('/problem', function(req, res, next) {
 	const id = req.query.id;
@@ -10,39 +12,43 @@ router.get('/problem', function(req, res, next) {
 		res.status(400).send("Expected id parameter");
 		return;
 	}
-	// const filePath = 'data/questions.json'
-	// fs.readFile(filePath, function(error, data){
-	// 	if(error){
-	// 		throw error;
-	// 	}
-		var file = {} //JSON.parse(data.toString());
-	// 	var fileData = file[id];
-	// 	if(fileData){
-	// 		res.send(fileData)
-	// 		return;
-	// 	} else {
-			const url = "https://projecteuler.net/problem=" + id;
-			request(url, function(error, response, html){
-				if(error){
-					throw error;
-				}
-				fileData = file[id] = {};
-				var $ = cheerio.load(html);
-				var content = $('#content')
-				fileData.title = content.find('h2').text();
-				// ToDo: Figure out how to replace with reduce
-				
-				var questionDesc = "";
-				content
-					.find('.problem_content')
-					.find('p')
-					.each(function(){questionDesc += " " + $(this).text()});
-				fileData.questionDesc = questionDesc.trim();
-				//fs.writeFile(filePath, JSON.stringify(file), function(err){});
-				res.send(fileData);
-			});
-	// 	}
-	// });
+	cache.get(id, function(error, value){
+		if(error){
+			throw error;
+		}
+		if(value){
+			res.send(value);
+			return;
+		}
+		const url = "https://projecteuler.net/problem=" + id;
+		const options = {
+			url: url
+		}
+		request(options, function(error, response, html){
+			if(error){
+				throw error;
+			}
+			var $ = cheerio.load(html);
+			var content = $('#content')
+			var title = content.find('h2').text();
+			var questionDesc = "";
+			content
+				.find('.problem_content')
+				.find('p')
+				.each(function(){questionDesc += " " + $(this).text()});
+			fileData = {
+				title: title,
+				questionDesc: questionDesc
+			};
+			var answerNode = content.find('.noprint').find('b');
+			if(answerNode.length){
+				fileData.answer = answerNode.text();
+			}
+			cache.set(id, fileData);
+			res.send(fileData);
+		});
+	})
+	
 });
 
 module.exports = router;

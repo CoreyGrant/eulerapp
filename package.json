@@ -18,7 +18,8 @@
 		"lodash": "latest",
 		"request": "latest",
 		"cheerio": "latest",
-		"jquery": "latest"
+		"jquery": "latest",
+		"node-cache": "latest"
 	},
 	"devDependencies": {
 		"grunt": "latest",

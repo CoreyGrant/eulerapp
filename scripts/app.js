@@ -16,13 +16,28 @@ var EulerHeader = React.createClass({
 		)
 	}
 });
+const tick = "\u2714";
+const cross = "\u2716";
 var EulerProblem = React.createClass({
 	render(){
+		var answer = "";
+		if(this.state.answer !== undefined){
+			if(this.state.correctAnswer !== undefined){
+				answer = this.state.answer + (+this.state.answer === +this.state.correctAnswer 
+					? tick 
+					: cross);
+			}
+			answer = this.state.answer;
+		}
 		return (
 			<tr>
 				<td>{this.props.num}</td>
-				<td>{this.state.title}</td>
-				<td>{this.state.answer || ""}</td>
+				<td>
+					<a href={"https://projecteuler.net/problem=" + this.props.num}>
+						{this.state.title}
+					</a>
+				</td>
+				<td>{answer}</td>
 				<td>{this.state.time === undefined ? "" : this.state.time}</td>
 				<td>
 					<button onClick={this.populateAnswer}>
@@ -48,29 +63,35 @@ var EulerProblem = React.createClass({
 	componentDidMount(){
 		$.get('api/problem?id=' + this.props.num)
 			.success(data => this.setState({
-				title: data.title
+				title: data.title,
+				correctAnswer: data.answer
 			}));
 	}
 });
 var EulerBody = React.createClass({
+	componentWillMount(){
+		this.refs = {};
+	},
 	render(){
 		var questions = this.props.questions
-			.map(x => <EulerProblem key={x.key} num={x.key} run={x.run} data={data[x.key]}/>);
+			.map(x => <EulerProblem ref={ref => this.refs[x.key] = ref} key={x.key} num={x.key} run={x.run} data={data[x.key]}/>);
 		return (
 			<tbody>
 				{questions}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><button onClick={this.populateAll}>Run all</button></td>
+				</tr>
 			</tbody>
 		)
+	},
+	populateAll(){
+		Object.keys(this.refs).forEach(x => this.refs[x].populateAnswer());
 	}
 });
-// Should be below questions, comment doesn't work in JSX?
-// <tr>
-// 	<td></td>
-// 	<td></td>
-// 	<td></td>
-// 	<td></td>
-// 	<td><button onClick={() => questions.forEach(x => x.populateAnswer())}>Run all</button></td>
-// </tr>
 var EulerTable = React.createClass({
 	render(){
 		return (
