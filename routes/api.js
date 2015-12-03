@@ -6,7 +6,7 @@ var fs = require('fs');
 var NodeCache = require('node-cache');
 var cache = new NodeCache();
 
-router.get('/problem', function(req, res, next) {
+router.get('/problem', function(req, res) {
 	const id = req.query.id;
 	if(!id){
 		res.status(400).send("Expected id parameter");
@@ -40,15 +40,32 @@ router.get('/problem', function(req, res, next) {
 				title: title,
 				questionDesc: questionDesc
 			};
-			var answerNode = content.find('.noprint').find('b');
-			if(answerNode.length){
-				fileData.answer = answerNode.text();
-			}
 			cache.set(id, fileData);
 			res.send(fileData);
 		});
-	})
-	
+	});
+});
+
+router.get('/check', function(req, res){
+	const id = req.query.id;
+	if(!id){
+		res.status(400).send("Expected id parameter");
+		return;
+	}
+	const answer = req.query.answer;
+	if(!answer){
+		res.status(400).send("Expected answer parameter");
+		return;
+	}
+	const filePath = "data/answers.json";
+	fs.readFile(filePath, function(error, data){
+		var correctAnswer = JSON.parse(data)[id];
+		if(!correctAnswer){
+			res.send(undefined);
+			return;
+		}
+		res.send(+correctAnswer === +answer);
+	});
 });
 
 module.exports = router;

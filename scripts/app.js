@@ -20,14 +20,11 @@ const tick = "\u2714";
 const cross = "\u2716";
 var EulerProblem = React.createClass({
 	render(){
-		var answer = "";
-		if(this.state.answer !== undefined){
-			if(this.state.correctAnswer !== undefined){
-				answer = this.state.answer + (+this.state.answer === +this.state.correctAnswer 
-					? tick 
-					: cross);
-			}
-			answer = this.state.answer;
+		var correct = "";
+		if(this.state.correct !== undefined){
+			correct = this.state.correct
+				? tick
+				: cross;
 		}
 		return (
 			<tr>
@@ -37,7 +34,8 @@ var EulerProblem = React.createClass({
 						{this.state.title}
 					</a>
 				</td>
-				<td>{answer}</td>
+				<td>{this.state.answer}</td>
+				<td>{correct}</td>
 				<td>{this.state.time === undefined ? "" : this.state.time}</td>
 				<td>
 					<button onClick={this.populateAnswer}>
@@ -56,16 +54,22 @@ var EulerProblem = React.createClass({
 			answer: answer,
 			time: difference
 		});
+		$.get('api/check', {
+			id: this.props.num,
+			answer: answer
+		}).success(data => this.setState({
+			correct: data
+		}));
 	},
 	getInitialState(){
 		return {};
 	},
 	componentDidMount(){
-		$.get('api/problem?id=' + this.props.num)
-			.success(data => this.setState({
-				title: data.title,
-				correctAnswer: data.answer
-			}));
+		$.get('api/problem', {
+			id: this.props.num
+		}).success(data => this.setState({
+			title: data.title
+		}));
 	}
 });
 var EulerBody = React.createClass({
@@ -83,6 +87,7 @@ var EulerBody = React.createClass({
 					<td></td>
 					<td></td>
 					<td></td>
+					<td></td>
 					<td><button onClick={this.populateAll}>Run all</button></td>
 				</tr>
 			</tbody>
@@ -96,7 +101,7 @@ var EulerTable = React.createClass({
 	render(){
 		return (
 			<table>
-				<EulerHeader headers={["Question", "Title","Answer", "Time taken", ""]}/>
+				<EulerHeader headers={["Question", "Title", "Answer", "Correct?", "Time taken", ""]}/>
 				<EulerBody questions={Questions}/>
 			</table>
 		);
